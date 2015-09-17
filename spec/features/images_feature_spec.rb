@@ -62,4 +62,17 @@ feature 'images' do
     end
   end
 
+  context 'deleting images' do
+
+    before {Image.create name: 'test'}
+
+    scenario 'removes an image when a user clicks a delete link' do
+      visit '/images'
+      click_link 'Delete test'
+      expect(page).not_to have_content 'test'
+      expect(page).not_to have_selector 'img'
+      expect(page).to have_content 'Image deleted successfully'
+    end
+  end
+
 end
