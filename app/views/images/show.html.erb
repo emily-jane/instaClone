@@ -1,2 +1,13 @@
 <h2><%= @image.name %></h2>
 <img><%= image_tag @image.image.url(:medium) %></img>
+<% if @image.comments.any? %>
+  <ul>
+    <% @image.comments.each do |comment| %>
+      <li>
+        <%= comment.thoughts %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No comments.</p>
+<% end %>

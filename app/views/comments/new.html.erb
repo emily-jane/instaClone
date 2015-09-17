@@ -1,0 +1,8 @@
+<h2><%= @image.name %></h2>
+<img><%= image_tag @image.image.url(:medium) %></img>
+
+<%= form_for [@image, @comment] do |comment| %>
+  <%= comment.label :thoughts %>
+  <%= comment.text_area :thoughts %>
+  <%= comment.submit 'Leave Comment' %>
+<% end %>
