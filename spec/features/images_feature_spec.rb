@@ -47,4 +47,19 @@ feature 'images' do
     end
   end
 
+  context 'editing images' do
+
+    before {Image.create name: 'test'}
+
+    scenario 'let a user edit an image and image name' do
+      visit '/images'
+      click_link 'Edit test'
+      fill_in 'Name', with: 'testing 123'
+      click_button 'Update Image'
+      expect(page).to have_content 'testing 123'
+      expect(page).to have_selector 'img'
+      expect(current_path).to eq '/images'
+    end
+  end
+
 end

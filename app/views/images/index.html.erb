@@ -4,6 +4,7 @@
   <% @images.each do |image| %>
     <img><%= image_tag image.image.url(:thumb) %></img>
     <h2><%= link_to image.name, image_path(image) %></h2>
+    <p><%= link_to "Edit #{image.name}", edit_image_path(image) %><p>
   <% end %>
 <% else %>
   <h1>No images yet</h1>
