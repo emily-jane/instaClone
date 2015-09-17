@@ -1,5 +1,6 @@
-<%= form_for @image do |image| %>
+<%= form_for @image, html: {multipart: true} do |image| %>
   <%= image.label :name %>
   <%= image.text_field :name %>
+  <%= image.file_field :image %>
   <%= image.submit %>
 <% end %>

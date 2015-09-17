@@ -1,6 +1,6 @@
 <% if @images.any? %>
   <% @images.each do |image| %>
-    <img>DISPLAY IMAGE HERE</img>
+    <img><%= image_tag image.image.url(:thumb) %></img>
     <h2><%= image.name %></h2>
   <% end %>
 <% else %>
