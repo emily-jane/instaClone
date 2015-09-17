@@ -1,4 +1,6 @@
-<a href="/images/new">Add an image</a>
+<% if user_signed_in? %>
+  <a href="/images/new">Add an image</a>
+<% end %>
 
 <% if @images.any? %>
   <% @images.each do |image| %>
