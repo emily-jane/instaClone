@@ -8,4 +8,6 @@ describe Image, type: :model do
     expect(image).to have(1).error_on(:name)
     expect(image).not_to be_valid
   end
+
+  it { is_expected.to belong_to :user }
 end
