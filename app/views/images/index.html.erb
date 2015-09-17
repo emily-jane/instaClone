@@ -1,10 +1,10 @@
+<a href="/images/new">Add an image</a>
+
 <% if @images.any? %>
   <% @images.each do |image| %>
     <img><%= image_tag image.image.url(:thumb) %></img>
-    <h2><%= image.name %></h2>
+    <h2><%= link_to image.name, image_path(image) %></h2>
   <% end %>
 <% else %>
   <h1>No images yet</h1>
 <% end %>
-
-<a href="/images/new">Add an image</a>

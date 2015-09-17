@@ -34,4 +34,17 @@ feature 'images' do
     end
   end
 
+  context 'viewing images' do
+
+    let!(:test){Image.create(name:'test')}
+
+    scenario 'lets a user view the whole image' do
+      visit '/images'
+      click_link 'test'
+      expect(page).to have_content 'test'
+      expect(page).to have_selector 'img'
+      expect(current_path).to eq "/images/#{test.id}"
+    end
+  end
+
 end
