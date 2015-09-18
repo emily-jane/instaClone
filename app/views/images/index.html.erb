@@ -8,10 +8,7 @@
     <h2><%= link_to image.name, image_path(image) %></h2>
     <p><%= link_to "Edit #{image.name}", edit_image_path(image) %><p>
     <p><%= link_to "Delete #{image.name}", image_path(image), method: :delete %></p>
-    <% if current_user.has_commented? @image %>
-    <% else %>
       <p><%= link_to "Comment on #{image.name}", new_image_comment_path(image) %></p>
-    <% end %>
     <h3>Comments for <%= image.name %></h3>
 
     <% if image.comments.any? %>

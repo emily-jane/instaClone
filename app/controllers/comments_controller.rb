@@ -6,18 +6,9 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @image = Image.find review_params[:image_id]
-    @comment = @image.build_comment current_user, comment_params
-
-    if @comment.save
-      redirect_to images_path
-    else
-      if @comment.errors[:user]
-        redirect_to image_path, alert: 'You have already commented on this image'
-      else
-        render :new
-      end
-    end
+    @image = Image.find(params[:image_id])
+    @image.comments.create(comment_params)
+    redirect_to images_path
   end
 
   def comment_params
