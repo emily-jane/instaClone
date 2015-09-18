@@ -9,6 +9,15 @@ def signup
   click_button('Sign up')
 end
 
+def signuptwo
+  visit '/'
+  click_link('Sign up')
+  fill_in('Email', with: 'testtwo@example.com')
+  fill_in('Password', with: 'testtesttest')
+  fill_in('Password confirmation', with: 'testtesttest')
+  click_button('Sign up')
+end
+
 
 feature 'images' do
   context 'no images have been added' do
@@ -66,31 +75,55 @@ feature 'images' do
 
   context 'editing images' do
 
-    before {Image.create name: 'test'}
-
-    scenario 'let a user edit an image and image name' do
+    scenario 'let a user edit an image and image name if they created it' do
       signup
-      visit '/images'
+      click_link 'Add an image'
+      fill_in 'Name', with: 'test'
+      click_button 'Create Image'
       click_link 'Edit test'
-      fill_in 'Name', with: 'testing 123'
+      fill_in 'Name', with: '123'
       click_button 'Update Image'
-      expect(page).to have_content 'testing 123'
+      expect(page).to have_content '123'
       expect(page).to have_selector 'img'
       expect(current_path).to eq '/images'
+    end
+
+    scenario 'does not let a user edit an image if they did not create it' do
+      signup
+      click_link 'Add an image'
+      fill_in 'Name', with: 'test'
+      click_button 'Create Image'
+      click_link 'Sign out'
+      signuptwo
+      expect(page).to have_content 'test'
+      expect(page).to have_selector 'img'
+      expect(page).not_to have_content 'Edit test'
     end
   end
 
   context 'deleting images' do
 
-    before {Image.create name: 'test'}
-
-    scenario 'removes an image when a user clicks a delete link' do
+    scenario 'removes an image when a user clicks a delete link if they created it' do
       signup
-      visit '/images'
+      click_link 'Add an image'
+      fill_in 'Name', with: 'test'
+      click_button 'Create Image'
       click_link 'Delete test'
       expect(page).not_to have_content 'test'
       expect(page).not_to have_selector 'img'
       expect(page).to have_content 'Image deleted successfully'
+    end
+
+    scenario 'does not remove an image if the user did not create it' do
+      signup
+      click_link 'Add an image'
+      fill_in 'Name', with: 'test'
+      click_button 'Create Image'
+      click_link 'Sign out'
+      signuptwo
+      expect(page).to have_content 'test'
+      expect(page).to have_selector 'img'
+      expect(page).not_to have_content 'Delete test'
     end
   end
 

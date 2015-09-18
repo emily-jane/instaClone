@@ -7,11 +7,11 @@ class ImagesController < ApplicationController
   end
 
   def new
-    @image = Image.new
+    @image = current_user.images.new
   end
 
   def create
-    @image = Image.new(image_params)
+    @image = current_user.images.new(image_params)
     if @image.save
       redirect_to '/images'
     else
@@ -29,16 +29,25 @@ class ImagesController < ApplicationController
 
   def update
     @image = Image.find(params[:id])
-    @image.update(image_params)
-
-    redirect_to '/images'
+    if !current_user.nil? && current_user.id == @image.user_id
+      @image.update(image_params)
+      redirect_to '/images'
+    else
+      flash[:notice] = 'You cannot edit an image you did not create'
+      redirect_to '/images'
+    end
   end
 
   def destroy
     @image = Image.find(params[:id])
-    @image.destroy
-    flash[:notice] = 'Image deleted successfully'
-    redirect_to '/images'
+    if !current_user.nil? && current_user.id == @image.user_id
+      @image.destroy
+      flash[:notice] = 'Image deleted successfully'
+      redirect_to '/images'
+    else
+      flash[:notice] = 'You cannot delete an image you did not create'
+      redirect_to '/images'
+    end
   end
 
   def image_params
