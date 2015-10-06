@@ -10,7 +10,6 @@ def signup
 end
 
 def addimage
-  visit '/images'
   click_link 'Add an image'
   fill_in 'Name', with: 'test'
   attach_file('Image', 'spec/files/images/test.jpg')
@@ -24,12 +23,12 @@ feature 'likes' do
     expect(page).to have_content '0 Likes'
   end
 
-  # scenario 'should be able to like an image if you are signed in', js: true do
-  #   signup
-  #   addimage
-  #   click_link 'Like'
-  #   expect(page).to have_content '1 Like'
-  # end
+  scenario 'should be able to like an image if you are signed in', js: true do
+    signup
+    addimage
+    click_link 'Like'
+    expect(page).to have_content '1 Like'
+  end
 
   # scenario 'should not be able to like an image if you are not signed in, but can see likes' do
   #   signup
