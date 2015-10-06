@@ -18,6 +18,13 @@ def signuptwo
   click_button('Sign up')
 end
 
+def addimage
+  visit '/images'
+  click_link 'Add an image'
+  fill_in 'Name', with: 'test'
+  attach_file('Image', 'spec/files/images/test.jpg')
+  click_button 'Create Image'
+end
 
 feature 'images' do
   context 'no images have been added' do
@@ -30,14 +37,12 @@ feature 'images' do
   end
 
   context 'images have been added' do
-    before do
-      Image.create(name: 'test')
-    end
 
     scenario 'display images and image name' do
-      visit '/images'
+      signup
+      addimage
       expect(page).to have_content 'test'
-      expect(page).to have_selector 'img'
+      expect(page).to have_css ('img[src*="test.jpg"]')
       expect(page).not_to have_content 'No images yet'
     end
   end
@@ -45,12 +50,9 @@ feature 'images' do
   context 'adding images' do
     scenario 'prompts user to fill out a form, then displays the new image and name if they are logged in' do
       signup
-      visit '/images'
-      click_link 'Add an image'
-      fill_in 'Name', with: 'test'
-      click_button 'Create Image'
+      addimage
       expect(page).to have_content 'test'
-      expect(page).to have_selector 'img'
+      expect(page).to have_css ('img[src*="test.jpg"]')
       expect(current_path).to eq '/images'
     end
 
@@ -62,14 +64,13 @@ feature 'images' do
 
   context 'viewing images' do
 
-    let!(:test){Image.create(name:'test')}
-
     scenario 'lets a user view the whole image' do
-      visit '/images'
+      signup
+      addimage
       click_link 'test'
       expect(page).to have_content 'test'
-      expect(page).to have_selector 'img'
-      expect(current_path).to eq "/images/#{test.id}"
+      expect(page).to have_css ('img[src*="test.jpg"]')
+      expect(current_path).not_to eq '/images'
     end
   end
 
@@ -77,26 +78,23 @@ feature 'images' do
 
     scenario 'let a user edit an image and image name if they created it' do
       signup
-      click_link 'Add an image'
-      fill_in 'Name', with: 'test'
-      click_button 'Create Image'
+      addimage
       click_link 'Edit test'
-      fill_in 'Name', with: '123'
+      fill_in 'Name', with: 'rails'
+      attach_file('Image', 'spec/files/images/rails.jpg')
       click_button 'Update Image'
-      expect(page).to have_content '123'
-      expect(page).to have_selector 'img'
+      expect(page).to have_content 'rails'
+      expect(page).to have_css ('img[src*="rails.jpg"]')
       expect(current_path).to eq '/images'
     end
 
     scenario 'does not let a user edit an image if they did not create it' do
       signup
-      click_link 'Add an image'
-      fill_in 'Name', with: 'test'
-      click_button 'Create Image'
+      addimage
       click_link 'Sign out'
       signuptwo
       expect(page).to have_content 'test'
-      expect(page).to have_selector 'img'
+      expect(page).to have_css ('img[src*="test.jpg"]')
       expect(page).not_to have_content 'Edit test'
     end
   end
@@ -105,24 +103,20 @@ feature 'images' do
 
     scenario 'removes an image when a user clicks a delete link if they created it' do
       signup
-      click_link 'Add an image'
-      fill_in 'Name', with: 'test'
-      click_button 'Create Image'
+      addimage
       click_link 'Delete test'
       expect(page).not_to have_content 'test'
-      expect(page).not_to have_selector 'img'
+      expect(page).not_to have_css ('img[src*="test.jpg"]')
       expect(page).to have_content 'Image deleted successfully'
     end
 
     scenario 'does not remove an image if the user did not create it' do
       signup
-      click_link 'Add an image'
-      fill_in 'Name', with: 'test'
-      click_button 'Create Image'
+      addimage
       click_link 'Sign out'
       signuptwo
       expect(page).to have_content 'test'
-      expect(page).to have_selector 'img'
+      expect(page).to have_css ('img[src*="test.jpg"]')
       expect(page).not_to have_content 'Delete test'
     end
   end

@@ -9,46 +9,42 @@ def signup
   click_button('Sign up')
 end
 
+def addimage
+  visit '/images'
+  click_link 'Add an image'
+  fill_in 'Name', with: 'test'
+  attach_file('Image', 'spec/files/images/test.jpg')
+  click_button 'Create Image'
+end
+
 feature 'likes' do
   scenario 'image should start with no likes' do
     signup
-    visit '/images'
-    click_link 'Add an image'
-    fill_in 'Name', with: 'test'
-    click_button 'Create Image'
-    expect(page).to have_content 'Likes: 0'
+    addimage
+    expect(page).to have_content '0 Likes'
   end
 
-  # scenario 'should be able to like an image if you are signed in' do
+  # scenario 'should be able to like an image if you are signed in', js: true do
   #   signup
-  #   visit '/images'
-  #   click_link 'Add an image'
-  #   fill_in 'Name', with: 'test'
-  #   click_button 'Create Image'
-  #   click_button 'Like'
-  #   expect(page).to have_content 'Likes: 1'
+  #   addimage
+  #   click_link 'Like'
+  #   expect(page).to have_content '1 Like'
   # end
 
   # scenario 'should not be able to like an image if you are not signed in, but can see likes' do
   #   signup
-  #   visit '/images'
-  #   click_link 'Add an image'
-  #   fill_in 'Name', with: 'test'
-  #   click_button 'Create Image'
+  #   addimage
   #   click_link 'Sign out'
-  #   expect(page).to have_content 'Likes: 0'
+  #   expect(page).to have_content '0 Likes'
   #   expect(page).not_to have_button 'Like'
   # end
 
   # scenario 'user should only be able to like an image once' do
   #   signup
-  #   visit '/images'
-  #   click_link 'Add an image'
-  #   fill_in 'Name', with: 'test'
-  #   click_button 'Create Image'
+  #   addimage
   #   click_button 'Like'
   #   click_button 'Like'
-  #   expect(page).to have_content 'Likes: 1'
+  #   expect(page).to have_content '1 Like'
   # end
 end
 

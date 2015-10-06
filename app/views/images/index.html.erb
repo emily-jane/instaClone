@@ -11,6 +11,8 @@
       <p><%= link_to "Delete #{image.name}", image_path(image), method: :delete %></p>
     <% end %>
     <p><%= link_to "Comment on #{image.name}", new_image_comment_path(image) %></p>
+    <p><%= link_to "Like", image_likes_path(image), class: 'likes-link' %></p>
+      <span class="likes_count"> <%= image.likes.count %> </span> <%= 'Like'.pluralize(image.likes.count) %>
     <h3>Comments for <%= image.name %></h3>
 
     <% if image.comments.any? %>

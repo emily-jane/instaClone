@@ -6,5 +6,6 @@ class Image < ActiveRecord::Base
   validates :name, length: {minimum: 1}
   belongs_to :user
   has_many :likes
+  validates_presence_of :image
 
 end
