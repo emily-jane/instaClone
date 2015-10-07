@@ -2,13 +2,17 @@
 <ul class="small-block-grid-3">
   <% @images.each do |image| %>
   <li>
-    <img><%= image_tag image.image.url(:thumb) %></img>
-    <h2><%= link_to image.name, image_path(image) %></h2>
-    <% if current_user != nil && current_user.id == image.user_id %>
-      <p><%= link_to "Edit #{image.name}", edit_image_path(image) %></p>
-      <p><%= link_to "Delete #{image.name}", image_path(image), method: :delete %></p>
+    <p><%= image.name %></p>
+    <%= link_to image_path(image) do %>
+      <img><%= image_tag image.image.url(:medium) %></img>
     <% end %>
-    <p><%= link_to "Comment on #{image.name}", new_image_comment_path(image) %></p>
+    <ul class="inline-list">
+    <% if current_user != nil && current_user.id == image.user_id %>
+      <li><%= link_to "Edit", edit_image_path(image) %></li>
+      <li><%= link_to "Delete", image_path(image), method: :delete %></li>
+    <% end %>
+    <li><%= link_to "Comment", new_image_comment_path(image) %></li>
+    </ul>
     <% if current_user != nil %>
       <%= link_to "Like", image_likes_path(image), class: 'likes-link' %>
       <span class="likes_count"> <%= image.likes.count %> </span> <%= 'Like'.pluralize(image.likes.count) %>
