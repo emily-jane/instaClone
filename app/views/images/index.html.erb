@@ -1,32 +1,36 @@
 <% if user_signed_in? %>
-  <a href="/images/new">Add an image</a>
+<a href="/images/new">Add an image</a>
 <% end %>
 
 <% if @images.any? %>
+<ul>
   <% @images.each do |image| %>
+  <li>
     <img><%= image_tag image.image.url(:thumb) %></img>
     <h2><%= link_to image.name, image_path(image) %></h2>
     <% if current_user != nil && current_user.id == image.user_id %>
-      <p><%= link_to "Edit #{image.name}", edit_image_path(image) %><p>
-      <p><%= link_to "Delete #{image.name}", image_path(image), method: :delete %></p>
+    <p><%= link_to "Edit #{image.name}", edit_image_path(image) %></p>
+    <p><%= link_to "Delete #{image.name}", image_path(image), method: :delete %></p>
     <% end %>
     <p><%= link_to "Comment on #{image.name}", new_image_comment_path(image) %></p>
-    <p><%= link_to "Like", image_likes_path(image), class: 'likes-link' %></p>
-      <span class="likes_count"> <%= image.likes.count %> </span> <%= 'Like'.pluralize(image.likes.count) %>
+    <%= link_to "Like", image_likes_path(image), class: 'likes-link' %>
+    <span class="likes_count"> <%= image.likes.count %> </span> <%= 'Like'.pluralize(image.likes.count) %>
     <h3>Comments for <%= image.name %></h3>
 
     <% if image.comments.any? %>
-      <ul>
-        <% image.comments.each do |comment| %>
-          <li>
-            <%= comment.thoughts %>
-          </li>
-        <% end %>
-      </ul>
+    <ul>
+      <% image.comments.each do |comment| %>
+      <li>
+        <%= comment.thoughts %>
+      </li>
+      <% end %>
+    </ul>
     <% else %>
-      <p>No comments.</p>
+    <p>No comments.</p>
     <% end %>
+  </li>
   <% end %>
+</ul>
 <% else %>
-  <h1>No images yet</h1>
+<h1>No images yet</h1>
 <% end %>
