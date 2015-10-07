@@ -17,6 +17,8 @@ gem 'shoulda'
 
 gem 'devise'
 
+gem 'foundation-rails'
+
 group :development, :test do
   gem 'byebug'
 end
