@@ -30,13 +30,13 @@ feature 'likes' do
     expect(page).to have_content '1 Like'
   end
 
-  # scenario 'should not be able to like an image if you are not signed in, but can see likes' do
-  #   signup
-  #   addimage
-  #   click_link 'Sign out'
-  #   expect(page).to have_content '0 Likes'
-  #   expect(page).not_to have_button 'Like'
-  # end
+  scenario 'should not be able to like an image or see images if you are not signed in' do
+    signup
+    addimage
+    click_link 'Sign out'
+    expect(page).not_to have_content '0 Likes'
+    expect(page).not_to have_link 'Like'
+  end
 
   # scenario 'user should only be able to like an image once' do
   #   signup
