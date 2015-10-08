@@ -1,5 +1,5 @@
 <% if @images.any? %>
-<ul class="small-block-grid-3 small-centered columns text-center the-grid">
+<ul class="small-block-grid-3 small-centered columns text-center">
   <% @images.each do |image| %>
   <li>
     <h4><%= image.name %></h4>
@@ -11,21 +11,24 @@
     <ul class="inline-list small-centered columns text-center">
       <% if current_user != nil && current_user.id == image.user_id %>
         <li><%= link_to "Edit", edit_image_path(image) %></li>
-        <li><%= link_to "Delete", image_path(image), method: :delete %></li>
       <% end %>
       <li><%= link_to "Comment", new_image_comment_path(image) %></li>
-      <% if current_user != nil %>
-        <%= link_to "Like", image_likes_path(image), class: 'likes-link' %>
-        <span class="likes_count"><%= image.likes.count %></span> <%= 'Like'.pluralize(image.likes.count) %>
+      <% if current_user != nil && current_user.id == image.user_id %>
+        <li><%= link_to "Delete", image_path(image), method: :delete %></li>
       <% end %>
     </ul>
+
+    <% if current_user != nil %>
+      <%= link_to "Like", image_likes_path(image), class: 'likes-link' %> - 
+      <span class="likes_count"><%= image.likes.count %></span> <%= 'Like'.pluralize(image.likes.count) %>
+    <% end %>
     <h4>Comments:</h4>
 
     <% if image.comments.any? %>
     <ul>
       <% image.comments.each do |comment| %>
       <li>
-        <%= current_user.email %> - <%= comment.thoughts %>
+        <%= comment.thoughts %>
       </li>
       <% end %>
     </ul>
