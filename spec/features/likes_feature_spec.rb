@@ -9,6 +9,15 @@ def signup
   click_button('Sign up')
 end
 
+def signuptwo
+  visit '/'
+  click_link('Sign up')
+  fill_in('Email', with: 'testtwo@example.com')
+  fill_in('Password', with: 'testtesttest')
+  fill_in('Password confirmation', with: 'testtesttest')
+  click_button('Sign up')
+end
+
 def addimage
   click_link 'Add an image'
   fill_in 'Name', with: 'test'
@@ -47,5 +56,17 @@ feature 'likes' do
     expect(page).not_to have_content '3 Likes'
     expect(page).to have_content '1 Like'
   end
+
+  scenario 'two different users can like the same image', js: true do
+    signup
+    addimage
+    click_link 'Like'
+    click_link 'Sign out'
+    signuptwo
+    click_link 'Like'
+    expect(page).not_to have_content '1 Like'
+    expect(page).to have_content '2 Likes'
+  end
+
 end
 

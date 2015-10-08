@@ -22,7 +22,7 @@ feature 'commenting' do
   scenario 'allows users to leave a comment using a form' do
     signup
     addimage
-    click_link 'Comment on test'
+    click_link 'Comment'
     fill_in "Thoughts", with: "nice logo makers"
     click_button 'Leave Comment'
 

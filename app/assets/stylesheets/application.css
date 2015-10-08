@@ -4,4 +4,12 @@
  *= require foundation_and_overrides
  */
 
- 
+#image {
+  max-width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+ul {
+ list-style: none;
+}

@@ -1,29 +1,31 @@
 <% if @images.any? %>
-<ul class="small-block-grid-3">
+<ul class="small-block-grid-3 small-centered columns text-center the-grid">
   <% @images.each do |image| %>
   <li>
-    <p><%= image.name %></p>
+    <h4><%= image.name %></h4>
     <%= link_to image_path(image) do %>
-      <img><%= image_tag image.image.url(:medium) %></img>
+      <div id="mainimage">
+        <img><%= image_tag image.image.url(:medium) %></img>
+      </div>
     <% end %>
-    <ul class="inline-list">
-    <% if current_user != nil && current_user.id == image.user_id %>
-      <li><%= link_to "Edit", edit_image_path(image) %></li>
-      <li><%= link_to "Delete", image_path(image), method: :delete %></li>
-    <% end %>
-    <li><%= link_to "Comment", new_image_comment_path(image) %></li>
+    <ul class="inline-list small-centered columns text-center">
+      <% if current_user != nil && current_user.id == image.user_id %>
+        <li><%= link_to "Edit", edit_image_path(image) %></li>
+        <li><%= link_to "Delete", image_path(image), method: :delete %></li>
+      <% end %>
+      <li><%= link_to "Comment", new_image_comment_path(image) %></li>
+      <% if current_user != nil %>
+        <%= link_to "Like", image_likes_path(image), class: 'likes-link' %>
+        <span class="likes_count"><%= image.likes.count %></span> <%= 'Like'.pluralize(image.likes.count) %>
+      <% end %>
     </ul>
-    <% if current_user != nil %>
-      <%= link_to "Like", image_likes_path(image), class: 'likes-link' %>
-      <span class="likes_count"> <%= image.likes.count %> </span> <%= 'Like'.pluralize(image.likes.count) %>
-    <% end %>
-    <h3>Comments for <%= image.name %></h3>
+    <h4>Comments:</h4>
 
     <% if image.comments.any? %>
     <ul>
       <% image.comments.each do |comment| %>
       <li>
-        <%= comment.thoughts %>
+        <%= current_user.email %> - <%= comment.thoughts %>
       </li>
       <% end %>
     </ul>

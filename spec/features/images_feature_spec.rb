@@ -66,7 +66,7 @@ feature 'images' do
     scenario 'lets a user view the whole image' do
       signup
       addimage
-      click_link 'test'
+      click_link('mainimage')
       expect(page).to have_content 'test'
       expect(page).to have_css ('img[src*="test.jpg"]')
       expect(current_path).not_to eq '/images'
@@ -78,7 +78,7 @@ feature 'images' do
     scenario 'let a user edit an image and image name if they created it' do
       signup
       addimage
-      click_link 'Edit test'
+      click_link 'Edit'
       fill_in 'Name', with: 'rails'
       attach_file('Image', 'spec/files/images/rails.jpg')
       click_button 'Update Image'
@@ -94,7 +94,7 @@ feature 'images' do
       signuptwo
       expect(page).to have_content 'test'
       expect(page).to have_css ('img[src*="test.jpg"]')
-      expect(page).not_to have_content 'Edit test'
+      expect(page).not_to have_content 'Edit'
     end
   end
 
@@ -103,7 +103,7 @@ feature 'images' do
     scenario 'removes an image when a user clicks a delete link if they created it' do
       signup
       addimage
-      click_link 'Delete test'
+      click_link 'Delete'
       expect(page).not_to have_content 'test'
       expect(page).not_to have_css ('img[src*="test.jpg"]')
       expect(page).to have_content 'Image deleted successfully'
@@ -116,7 +116,7 @@ feature 'images' do
       signuptwo
       expect(page).to have_content 'test'
       expect(page).to have_css ('img[src*="test.jpg"]')
-      expect(page).not_to have_content 'Delete test'
+      expect(page).not_to have_content 'Delete'
     end
   end
 
