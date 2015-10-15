@@ -1,6 +1,6 @@
 == README
 
-The challenge was to build Instagram using ruby on rails.
+The challenge was to build a clone of Instagram using ruby on rails.
 
 Requirements:
 

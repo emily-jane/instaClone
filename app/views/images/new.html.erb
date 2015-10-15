@@ -1,18 +1,19 @@
 <% if @image.errors.any? %>
-  <section id="errors" >
-    <h2> <%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved: </h2>
-    <ul>
-      <% @image.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </section>
+<section id="errors" >
+  <p> <%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved: </p>
+  <ul>
+    <% @image.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</section>
 <% end %>
 
 <%= form_for @image, html: {multipart: true} do |image| %>
+<div class="large-4 columns">
   <%= image.label :name %>
   <%= image.text_field :name %>
-  <%= image.label :image %>
   <%= image.file_field :image %>
-  <%= image.submit %>
+  <%= image.submit :class => 'button small round' %>
+</div>
 <% end %>

@@ -13,3 +13,11 @@
 ul {
  list-style: none;
 }
+
+.comments {
+  margin-left: 20px;
+}
+
+.text-box-comments {
+  width: 400px;
+}

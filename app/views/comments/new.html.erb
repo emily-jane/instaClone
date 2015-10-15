@@ -1,8 +1,12 @@
-<h2><%= @image.name %></h2>
-<img><%= image_tag @image.image.url(:medium) %></img>
+<div class="comments">  
+  <h2><%= @image.name %></h2>
+  <img><%= image_tag @image.image.url(:medium) %></img>
 
-<%= form_for [@image, @comment] do |comment| %>
-  <%= comment.label :thoughts %>
-  <%= comment.text_area :thoughts %>
-  <%= comment.submit 'Leave Comment' %>
-<% end %>
+  <%= form_for [@image, @comment] do |comment| %>
+    <div class="large-4 columns-centered">
+      <%= comment.label :thoughts %>
+      <%= comment.text_area :thoughts, :class => 'text-box-comments' %>
+      <%= comment.submit 'Leave Comment', :class => 'button small round' %>
+    </div>
+  <% end %>
+</div>
