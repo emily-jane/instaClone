@@ -1,9 +1,0 @@
-== README
-
-The challenge was to build a clone of Instagram using ruby on rails.
-
-Requirements:
-
-Needs users who can post pictures, write comments on pictures and like a picture. Style it like Instagram's website (or similar).
-
-Tested with Rspec.
