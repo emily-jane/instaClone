@@ -5,7 +5,7 @@ class Image < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   validates :name, length: {minimum: 1}
   belongs_to :user
-  has_many :likes
+  has_many :likes, dependent: :destroy
   validates_presence_of :image
 
 end
