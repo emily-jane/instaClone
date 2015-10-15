@@ -4,7 +4,7 @@
   <li>
     <h4><%= image.name %></h4>
     <%= link_to image_path(image) do %>
-      <div id="mainimage">
+      <div class="crop-image">
         <img><%= image_tag image.image.url(:medium) %></img>
       </div>
     <% end %>
