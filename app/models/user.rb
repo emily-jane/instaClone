@@ -5,5 +5,10 @@ class User < ActiveRecord::Base
   has_many :images
   has_many :comments
   has_many :likes
+  has_many :liked_images, through: :likes, source: :image
+
+  def has_liked?(image)
+    liked_images.include? image
+  end
 
 end
