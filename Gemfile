@@ -17,7 +17,7 @@ gem 'shoulda'
 
 gem 'devise'
 
-gem 'foundation-rails'
+gem 'foundation-rails', '=5.5.1.0'
 
 group :development, :test do
   gem 'byebug'
